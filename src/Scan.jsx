@@ -5,48 +5,14 @@ import { Button } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 
 const Scan = (props) => {
+  const { value } = props;
   const [barcode, setBarcode] = useState("");
-  const [value, setValue] = useState("");
+  // const [value, setValue] = useState("");
   const [status, setStatus] = useState(false);
   const [startStatus, setStartStatus] = useState(false);
   const [stopStatus, setStopStatus] = useState(true);
   const URL =
     "https://554r4a0j8g.execute-api.ap-northeast-1.amazonaws.com/default/Notion-API";
-
-  // useEffect(() => {
-  //   const config = {
-  //     inputStream: {
-  //       name: "Live",
-  //       type: "LiveStream",
-  //       target: "#preview",
-  //       size: 1000,
-  //       singleChannel: false
-  //     },
-  //     locator: {
-  //       patchSize: "medium",
-  //       halfSample: true
-  //     },
-  //     decoder: {
-  //       readers: [
-  //         {
-  //           format: "ean_reader",
-  //           config: {}
-  //         }
-  //       ]
-  //     },
-  //     numOfWorker: navigator.hardwareConcurrency || 4,
-  //     locate: true,
-  //     src: null
-  //   };
-
-  //   Quagga.init(config, function (err) {
-  //     if (err) {
-  //       console.log(err);
-  //       return;
-  //     }
-  //     Quagga.start();
-  //   });
-  // }, []);
 
   useEffect(() => {
     status && getBookInformation(barcode);
@@ -74,7 +40,6 @@ const Scan = (props) => {
       axios
         .get(URL, { params: param })
         .then((res) => {
-          console.log(res.data);
           setStatus(true);
         })
         .catch((err) => {
@@ -110,7 +75,6 @@ const Scan = (props) => {
       src: null
     };
 
-    console.log(Quagga.start, "START");
     Quagga.init(config, function (err) {
       if (err) {
         console.log(err);
@@ -130,13 +94,13 @@ const Scan = (props) => {
     Quagga.stop();
   };
 
-  const onChange = (e) => {
-    setValue(e.target.value);
-  };
+  // const onChange = (e) => {
+  //   setValue(e.target.value);
+  // };
 
   return (
     <>
-      <input value={value} onChange={onChange} />
+      {/* <input value={value} onChange={onChange} /> */}
       <h2>バーコードスキャナ</h2>
       <Button disabled={startStatus} onClick={onStart}>
         START
